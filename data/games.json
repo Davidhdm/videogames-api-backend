@@ -1,0 +1,12 @@
+{
+  "games": [
+    {
+      "id": 1,
+      "title": "Crash Bandicoot N. Sane Trilogy",
+      "img": "https://image.api.playstation.com/cdn/EP0002/CUSA07399_00/bPXMfRCtjGgvIS0BxOWqVsn94MAMLMkE.png",
+      "release_year": 2017,
+      "played": true,
+      "categories": "Platformer, Action, Adventure"
+    }
+  ]
+}
