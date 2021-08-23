@@ -7,6 +7,14 @@
       "played": true,
       "release_year": 2017,
       "categories": "Platformer, Action, Adventure"
+    },
+    {
+      "id": 2,
+      "title": "Bioshock Remastered",
+      "img": "https://skidrowlatino.com/wp-content/uploads/2020/04/descargar-BIOSHOCK-REMASTERED-pc-cover.jpg",
+      "played": true,
+      "release_year": 2016,
+      "categories": "FPS, Atmospheric, Action"
     }
   ]
 }

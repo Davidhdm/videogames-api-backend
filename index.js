@@ -52,19 +52,19 @@ app.post('/api/games', (request, response) => {
       !game.img || 
       game.img === "") {
     return response.status(400).json({
-      error: 'game.title is missing'
+      error: 'Game picture or title is missing'
     })
   }
 
   const ids = games.map(game => game.id)
   const maxId = Math.max(...ids)
 
-  console.log(maxId)
+  console.log('max id: ' + maxId)
 
   const newGame = {
     id: maxId + 1,
     title: game.title,
-    img: game.title,
+    img: game.img,
     played: typeof game.played !== 'undefined' ? game.played : false,
     release_year: typeof game.release_year !== 'undefined' ? game.release_year : "Release year not specified",
     categories: typeof game.categories !== 'undefined' ? game.categories : "Categories not specified"
