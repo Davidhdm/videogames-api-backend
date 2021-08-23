@@ -1,0 +1,57 @@
+POST http://localhost:3001/api/games
+Content-Type: application/json
+
+{
+}
+
+###
+
+POST http://localhost:3001/api/games
+Content-Type: application/json
+
+{
+  "played": false,
+  "release_year": 2000,
+  "categories": "Adventure"
+}
+
+###
+
+POST http://localhost:3001/api/games
+Content-Type: application/json
+
+{
+  "title": "Example game",
+  "img": "https://image.api.playstation.com/cdn/EP0002/CUSA07399_00/bPXMfRCtjGgvIS0BxOWqVsn94MAMLMkE.png"
+}
+
+###
+
+POST http://localhost:3001/api/games
+Content-Type: application/json
+
+{
+  "title": "Example game"
+}
+
+###
+
+POST http://localhost:3001/api/games
+Content-Type: application/json
+
+{
+  "img": "https://image.api.playstation.com/cdn/EP0002/CUSA07399_00/bPXMfRCtjGgvIS0BxOWqVsn94MAMLMkE.png"
+}
+
+###
+
+POST http://localhost:3001/api/games
+Content-Type: application/json
+
+{
+  "title": "Example",
+  "img": "https://image.api.playstation.com/cdn/EP0002/CUSA07399_00/bPXMfRCtjGgvIS0BxOWqVsn94MAMLMkE.png",
+  "played": true,
+  "release_year": 2017,
+  "categories": "Platformer, Action, Adventure"
+}
