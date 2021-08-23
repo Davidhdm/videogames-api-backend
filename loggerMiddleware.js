@@ -1,8 +1,9 @@
 const logger = (request, response, next) => {
-  console.log(request.method)
-  console.log(request.path)
+  console.log('=======================')
+  console.log('Method: ' + request.method)
+  console.log('Path: ' + request.path)
   console.log(request.body)
-  console.log('-----')
+  console.log('=======================')
   next()
 }
 
