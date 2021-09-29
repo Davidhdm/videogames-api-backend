@@ -48,11 +48,11 @@ app.delete('/api/games/:id', (request, response) => {
 app.post('/api/games', (request, response) => {
   const game = request.body
 
-  if (!game || 
-      !game.title || 
-      game.title === "" || 
-      !game.img || 
-      game.img === "") {
+  if (!game ||
+    !game.title ||
+    game.title === "" ||
+    !game.img ||
+    game.img === "") {
     return response.status(400).json({
       error: 'Game picture or title is missing'
     })
