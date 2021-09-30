@@ -79,7 +79,7 @@ app.post('/api/games', (request, response) => {
 
 app.patch('/api/games/:id', (request, response) => {
   const game = request.body
-  response.json(request)
+  response.json(game)
   /* if (!game || !game.title) {
     return response.status(400).json({
       error: 'Game title is missing'
