@@ -77,12 +77,12 @@ app.post('/api/games', (request, response) => {
   response.status(201).json(newGame)
 })
 
-/* app.patch('/api/games/:id', (request, response) => {
-  const task = request.body
-
-  if (!task || !task.title) {
+app.patch('/api/games/:id', (request, response) => {
+  const game = request.body
+  response.json(request)
+  /* if (!game || !game.title) {
     return response.status(400).json({
-      error: 'task.title is missing'
+      error: 'Game title is missing'
     })
   }
 
@@ -97,8 +97,8 @@ app.post('/api/games', (request, response) => {
 
       break
     }
-  })
-}) */
+  }) */
+})
 
 app.use((request, response) => {
   console.log(request.path)
