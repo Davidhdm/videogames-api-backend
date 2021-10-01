@@ -1,0 +1,27 @@
+### Attempt to edit a game with an empty title (ERROR)
+PATCH http://localhost:3001/api/games/4
+Content-Type: application/json
+
+{
+  "title": ""
+}
+
+### Attempt to edit a game with an empty picture string (ERROR)
+PATCH http://localhost:3001/api/games/4
+Content-Type: application/json
+
+{
+  "img": ""
+}
+
+### Attempt to edit a game with all the possible data (SUCCESS)
+PATCH http://localhost:3001/api/games/4
+Content-Type: application/json
+
+{
+  "title": "New title",
+  "img": "https://image.api.playstation.com/cdn/EP0002/CUSA07399_00/bPXMfRCtjGgvIS0BxOWqVsn94MAMLMkE.png",
+  "played": "In Progress",
+  "release_year": 2021,
+  "categories": "Platformer, Action, Adventure, Open World"
+}

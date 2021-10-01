@@ -83,9 +83,9 @@ app.patch('/api/games/:id', (request, response) => {
   const id = Number(request.params.id)
 
   if(editedData.title === '' ||
-    !editedData.title ||
+    editedData.title === null ||
     editedData.img === '' ||
-    !editedData.img) {
+    editedData.img === null) {
 
     return response.status(400).json({
       error: 'Game picture or title are missing.'
@@ -94,11 +94,11 @@ app.patch('/api/games/:id', (request, response) => {
 
   games.forEach((game) => {
     if (game.id === id) {
-      game.title = editedData.title
-      game.img = editedData.img
-      game.played = editedData.played
-      game.release_year = editedData.release_year
-      game.categories = editedData.categories
+      game.title = editedData.title || game.title
+      game.img = editedData.img || game.img
+      game.played = editedData.played || game.played
+      game.release_year = editedData.release_year || game.release_year
+      game.categories = editedData.categories || game.categories
     }
   })
 
