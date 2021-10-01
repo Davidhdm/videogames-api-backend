@@ -79,8 +79,8 @@ app.post('/api/games', (request, response) => {
 
 app.patch('/api/games/:id', (request, response) => {
   const editedData = request.body
-  const id = request.params.id
-  
+  const id = Number(request.params.id)
+
   let game = games.filter(game => game.id === id)
 
   response.json(game)
