@@ -48,13 +48,14 @@ app.delete('/api/games/:id', (request, response) => {
 app.post('/api/games', (request, response) => {
   const game = request.body
 
-  if (!game ||
+  if(!game ||
     !game.title ||
     game.title === "" ||
     !game.img ||
     game.img === "") {
+
     return response.status(400).json({
-      error: 'Game picture or title is missing'
+      error: 'Game picture or title are missing.'
     })
   }
 
@@ -81,27 +82,27 @@ app.patch('/api/games/:id', (request, response) => {
   const editedData = request.body
   const id = Number(request.params.id)
 
-  let game = games.filter(game => game.id === id)
+  if(editedData.title === '' ||
+    !editedData.title ||
+    editedData.img === '' ||
+    !editedData.img) {
 
-  response.json(game)
-  /* if (!game || !game.title) {
     return response.status(400).json({
-      error: 'Game title is missing'
+      error: 'Game picture or title are missing.'
     })
   }
 
-  const updatedTask = {
-    title: task.title,
-    isFinished: task.isFinished
-  }
-
-  taskList.forEach((taskToUpdate) => {
-    if (taskToUpdate.id === task.id) {
-      const testc = taskToUpdate
-
-      break
+  games.forEach((game) => {
+    if (game.id === id) {
+      game.title = editedData.title
+      game.img = editedData.img
+      game.played = editedData.played
+      game.release_year = editedData.release_year
+      game.categories = editedData.categories
     }
-  }) */
+  })
+
+  response.status(200).json(editedData)
 })
 
 app.use((request, response) => {
