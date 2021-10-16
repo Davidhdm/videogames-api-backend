@@ -18,28 +18,4 @@ gameSchema.set('toJSON', {
 
 const Game = model('Game', gameSchema)
 
-/* Game.find()
-  .then(result => {
-    console.log(result)
-    mongoose.connection.close()
-  }).catch(err => {
-    console.error(err)
-  }) */
-
-/* const game = new Game({
-  title: 'test game',
-  img: 'http://www.asdf.com/image.png',
-  played: 'Not played',
-  release_year: 2020,
-  categories: 'None'
-})
-
-game.save()
-  .then(result => {
-    console.log(result)
-    mongoose.connection.close()
-  }).catch(err => {
-    console.error(err)
-  }) */
-
 module.exports = Game

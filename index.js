@@ -8,10 +8,19 @@ const logger = require('./loggerMiddleware')
 const Game = require('./models/Game')
 const notFound = require('./notFound')
 const handleErrors = require('./handleErrors')
+const Sentry = require("@sentry/node");
+const Tracing = require("@sentry/tracing");
+const { Mongoose } = require('mongoose')
 
 app.use(cors())
 app.use(express.json())
 app.use(logger)
+app.use('images', express.static('img'))
+
+Sentry.init({
+  dsn: "https://266ea4a748034fe5a931c4b701065c86@o1040610.ingest.sentry.io/6009661",
+  tracesSampleRate: 1.0,
+});
 
 app.get('/', (request, response) => {
   response.send('<h1>Home Page</h1><a href="/api/games">List of games</a>')
@@ -20,7 +29,7 @@ app.get('/', (request, response) => {
 app.get('/api/games', (request, response, next) => {
   Game.find().then(games => {
     response.json(games)
-  }).catch(err => next(err))
+  }).catch(next)
 })
 
 app.get('/api/games/:id', (request, response, next) => {
@@ -32,7 +41,7 @@ app.get('/api/games/:id', (request, response, next) => {
     } else {
       response.status(404).end()
     }
-  }).catch(err => next(err))
+  }).catch(next)
 })
 
 app.delete('/api/games/:id', (request, response, next) => {
@@ -67,7 +76,7 @@ app.post('/api/games', (request, response, next) => {
 
   newGame.save().then(savedGame => {
     response.status(201).json(savedGame)
-  }).catch(err => next(err))
+  }).catch(next)
 })
 
 app.patch('/api/games/:id', (request, response, next) => {
@@ -94,10 +103,11 @@ app.patch('/api/games/:id', (request, response, next) => {
   Game.findByIdAndUpdate(id, editedGame, { new: true })
     .then(result => {
       response.status(200).json(result)
-    }).catch(err => next(err))
+    }).catch(next)
 })
 
 app.use(notFound)
+app.use(Sentry.Handlers.errorHandler())
 app.use(handleErrors)
 
 const PORT = process.env.PORT || 3001
