@@ -1,5 +1,5 @@
 ### Attempt to edit a game with an empty title (ERROR)
-PATCH http://localhost:3001/api/games/4
+PATCH http://localhost:3001/api/games/616a03e0ce7da07254808e4c
 Content-Type: application/json
 
 {
@@ -7,7 +7,7 @@ Content-Type: application/json
 }
 
 ### Attempt to edit a game with an empty picture string (ERROR)
-PATCH http://localhost:3001/api/games/4
+PATCH http://localhost:3001/api/games/616a03e0ce7da07254808e4c
 Content-Type: application/json
 
 {
@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ### Attempt to edit a game with all the possible data (SUCCESS)
-PATCH http://localhost:3001/api/games/4
+PATCH http://localhost:3001/api/games/616a03e0ce7da07254808e4c
 Content-Type: application/json
 
 {

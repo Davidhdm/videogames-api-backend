@@ -1,51 +1,49 @@
-let games = require('./data/games.json').games
+require('dotenv').config()
+require('./mongo')
+
 const express = require('express')
 const cors = require('cors')
 const app = express()
 const logger = require('./loggerMiddleware')
+const Game = require('./models/Game')
+const notFound = require('./notFound')
+const handleErrors = require('./handleErrors')
 
 app.use(cors())
 app.use(express.json())
 app.use(logger)
 
-/* const taskList = [
-  {
-    "id": 1
-  }
-] */
-
-/* const http = require('http');
-const app = http.createServer((request, response) => {
-  response.writeHead(200, { 'Content-Type': 'application/json' })
-  response.end(JSON.stringify(tasks))
-}); */
-
 app.get('/', (request, response) => {
   response.send('<h1>Home Page</h1><a href="/api/games">List of games</a>')
 })
 
-app.get('/api/games', (request, response) => {
-  response.json(games)
+app.get('/api/games', (request, response, next) => {
+  Game.find().then(games => {
+    response.json(games)
+  }).catch(err => next(err))
 })
 
-app.get('/api/games/:id', (request, response) => {
-  const id = Number(request.params.id)
-  const game = games.find(game => game.id === id)
+app.get('/api/games/:id', (request, response, next) => {
+  const { id } = request.params
 
-  if (game) {
-    response.json(game)
-  } else {
-    response.status(404).end()
-  }
+  Game.findById(id).then(game => {
+    if (game) {
+      return response.json(game)
+    } else {
+      response.status(404).end()
+    }
+  }).catch(err => next(err))
 })
 
-app.delete('/api/games/:id', (request, response) => {
-  const id = Number(request.params.id)
-  games = games.filter(game => game.id !== id)
-  response.status(204).end()
+app.delete('/api/games/:id', (request, response, next) => {
+  const { id } = request.params
+
+  Game.findByIdAndDelete(id)
+    .then(response.status(204).end())
+    .catch(error => next(error))
 })
 
-app.post('/api/games', (request, response) => {
+app.post('/api/games', (request, response, next) => {
   const game = request.body
 
   if(!game ||
@@ -59,58 +57,48 @@ app.post('/api/games', (request, response) => {
     })
   }
 
-  const ids = games.map(game => game.id)
-  const maxId = Math.max(...ids)
-
-  console.log('max id: ' + maxId)
-
-  const newGame = {
-    id: maxId + 1,
+  const newGame = new Game({
     title: game.title,
     img: game.img,
     played: typeof game.played !== 'undefined' ? game.played : false,
     release_year: typeof game.release_year !== 'undefined' ? game.release_year : "Release year not specified",
     categories: typeof game.categories !== 'undefined' ? game.categories : "Categories not specified"
-  }
+  })
 
-  games = games.concat(newGame)
-
-  response.status(201).json(newGame)
+  newGame.save().then(savedGame => {
+    response.status(201).json(savedGame)
+  }).catch(err => next(err))
 })
 
-app.patch('/api/games/:id', (request, response) => {
-  const editedData = request.body
-  const id = Number(request.params.id)
+app.patch('/api/games/:id', (request, response, next) => {
+  const game = request.body
+  const { id } = request.params
 
-  if(editedData.title === '' ||
-    editedData.title === null ||
-    editedData.img === '' ||
-    editedData.img === null) {
+  if(game.title === '' ||
+    game.title === null ||
+    game.img === '' ||
+    game.img === null) {
 
     return response.status(400).json({
       error: 'Game picture or title are missing.'
     })
   }
 
-  games.forEach((game) => {
-    if (game.id === id) {
-      game.title = editedData.title || game.title
-      game.img = editedData.img || game.img
-      game.played = editedData.played || game.played
-      game.release_year = editedData.release_year || game.release_year
-      game.categories = editedData.categories || game.categories
-    }
-  })
-
-  response.status(200).json(editedData)
+  const editedGame = {
+    title: game.title,
+    img: game.img,
+    played: game.played,
+    release_year: game.release_year,
+    categories: game.categories
+  }
+  Game.findByIdAndUpdate(id, editedGame, { new: true })
+    .then(result => {
+      response.status(200).json(result)
+    }).catch(err => next(err))
 })
 
-app.use((request, response) => {
-  console.log(request.path)
-  response.status(404).json({
-    error: 'Not Found'
-  })
-})
+app.use(notFound)
+app.use(handleErrors)
 
 const PORT = process.env.PORT || 3001
 

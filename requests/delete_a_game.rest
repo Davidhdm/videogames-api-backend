@@ -1,4 +1,4 @@
-DELETE http://localhost:3001/api/games/1
+DELETE http://localhost:3001/api/games/616a1b34af75ccf6616a7160
 
 ###
 

@@ -46,7 +46,7 @@ POST http://localhost:3001/api/games
 Content-Type: application/json
 
 {
-  "title": "Example",
+  "title": "asddf",
   "img": "https://image.api.playstation.com/cdn/EP0002/CUSA07399_00/bPXMfRCtjGgvIS0BxOWqVsn94MAMLMkE.png",
   "played": "Played",
   "release_year": 2017,
