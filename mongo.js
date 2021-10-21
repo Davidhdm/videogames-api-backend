@@ -1,8 +1,7 @@
 require('dotenv').config()
-const mongoose = require('mongoose')
+const mongoose = require ('mongoose')
 const connectionString = process.env.MONGODB_URI
 
-// Connection
 mongoose.connect(connectionString)
   .then(() => {
     console.log('Database connected')
@@ -11,5 +10,5 @@ mongoose.connect(connectionString)
   })
 
 process.on('uncaughtException', () => {
-  mongoose.connection.disconnect()
+  mongoose.disconnect()
 })
